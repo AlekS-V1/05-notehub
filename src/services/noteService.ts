@@ -1,4 +1,4 @@
-import type { Note, NoteTag } from "../types/note";
+import type { Note, NewFormNote } from "../types/note";
 import axios from 'axios';
 
 interface notesHttpResponse {
@@ -27,7 +27,7 @@ export async function fetchNotes(search: string, page: number, perPage: number =
     return response.data;  
 }
 
-export async function createdNotes(data: NoteTag) {
+export async function createNotes(data: NewFormNote) {
     const response = await axios.post<notesHttpResponse>('/notes', data,
         {
             headers: {
