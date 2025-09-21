@@ -9,8 +9,7 @@ interface notesHttpResponse {
 axios.defaults.baseURL = "https://notehub-public.goit.study/api";
 const sui = import.meta.env.VITE_NOTEHUB_TOKEN;
 
-export async function fetchNotes(search: string, page: number, perPage: number = 12): Promise<notesHttpResponse> {  
-
+export async function fetchNotes(search: string, page: number, perPage: number = 12): Promise<notesHttpResponse> {
     const response = await axios.get<notesHttpResponse>(
         '/notes', {
             params: {
@@ -28,8 +27,11 @@ export async function fetchNotes(search: string, page: number, perPage: number =
 }
 
 export async function createNote(data: NewFormNote) {
-    const response = await axios.post<notesHttpResponse>('/notes', data,
-        {
+    const response = await axios.post<notesHttpResponse>(
+        '/notes', {
+            params: {
+                data,
+            },
             headers: {
                 accept: 'application/json',
                 Authorization: `Bearer ${sui}`,
@@ -39,12 +41,14 @@ export async function createNote(data: NewFormNote) {
     return response.data;    
 }
 
-
 export async function deleteNote(noteId: string) {
-    await axios.delete<notesHttpResponse>(`/notes/${noteId}`,
-        {
+    await axios.delete<notesHttpResponse>(
+        '/notes', {
+            params: {
+                noteId,
+            },
             headers: {
-                accept: 'application / json',
+                accept: 'application/json',
                 Authorization: `Bearer ${sui}`,
             }
         }    

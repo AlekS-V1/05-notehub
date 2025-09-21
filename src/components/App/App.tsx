@@ -9,7 +9,6 @@ import SearchBox from '../SearchBox/SearchBox';
 import { useDebouncedCallback } from 'use-debounce';
 import Pagination from '../Pagination/Pagination';
 
-
 export default function App() {
     // Стан для зберігання поточної сторінки
     const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +26,7 @@ export default function App() {
 
     const handleSearch = useDebouncedCallback((val: string) => {
         setSearchQuery(val)
-    }, 1000)    
+    }, 300)    
 
     // Стан для керування модалкою
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -39,10 +38,12 @@ export default function App() {
             <header className={css.toolbar}>
                 <SearchBox searchQuery={searchQuery} onSearch={handleSearch} />
                 
-                {data?.notes && data.notes.length > 0 && (<Pagination pageCount={pageCount} currentPage={currentPage} setCurrentPage={setCurrentPage} />)}
+                {data?.notes && data.notes.length > 0 && (
+                    <Pagination pageCount={pageCount} currentPage={currentPage} setCurrentPage={setCurrentPage} />)}
 
                 <button className={css.button} onClick={openModal}>Create note +</button>
             </header>
+
             {isLoading && <strong >Loading notes...</strong>}
             {notes && !isLoading && <NoteList notes={notes ?? []} />}
             {isModalOpen &&
