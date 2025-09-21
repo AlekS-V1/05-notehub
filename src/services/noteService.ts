@@ -28,10 +28,7 @@ export async function fetchNotes(search: string, page: number, perPage: number =
 
 export async function createNote(data: NewFormNote) {
     const response = await axios.post<notesHttpResponse>(
-        '/notes', {
-            params: {
-                data,
-            },
+        '/notes', data, {
             headers: {
                 accept: 'application/json',
                 Authorization: `Bearer ${sui}`,
@@ -43,11 +40,8 @@ export async function createNote(data: NewFormNote) {
 
 export async function deleteNote(noteId: string) {
     await axios.delete<notesHttpResponse>(
-        '/notes', {
-            params: {
-                noteId,
-            },
-            headers: {
+        `/notes/${noteId}`, {
+                headers: {
                 accept: 'application/json',
                 Authorization: `Bearer ${sui}`,
             }
