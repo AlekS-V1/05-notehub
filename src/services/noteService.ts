@@ -27,11 +27,11 @@ export async function fetchNotes(search: string, page: number, perPage: number =
     return response.data;  
 }
 
-export async function createNotes(data: NewFormNote) {
+export async function createNote(data: NewFormNote) {
     const response = await axios.post<notesHttpResponse>('/notes', data,
         {
             headers: {
-                accept: 'application / json',
+                accept: 'application/json',
                 Authorization: `Bearer ${sui}`,
             }
         }    
@@ -40,7 +40,7 @@ export async function createNotes(data: NewFormNote) {
 }
 
 
-export async function deleteNotes(noteId: string) {
+export async function deleteNote(noteId: string) {
     await axios.delete<notesHttpResponse>(`/notes/${noteId}`,
         {
             headers: {
