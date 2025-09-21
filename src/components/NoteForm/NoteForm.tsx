@@ -1,15 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import css from '../NoteForm/NoteForm.module.css';
 import { createdNotes } from '../../services/noteService';
-import type { NoteTag } from '../../types/note';
+import type { NewNote } from '../../types/note';
 import { Field, Form, Formik, ErrorMessage, type FormikHelpers } from 'formik';
 import { useId } from 'react';
 import * as Yup from "yup";
 
 
-const initialValues: NoteTag = {
+const initialValues: NewNote = {
+  id: "",
   title: "",
   content: "",
+  createdAt: "",
+  updatedAt: "",
   tag: "Todo",
 };
 
@@ -21,19 +24,22 @@ export default function NoteForm({onClose}: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (newNote: NoteTag) => createdNotes(newNote),
+    mutationFn: (newNote: NewNote) => createdNotes(newNote),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ["notes"]})
     }
   });
   
   const handleSubmit = (
-    values: NoteTag,
-    actions: FormikHelpers<NoteTag>
+    values: NewNote,
+    actions: FormikHelpers<NewNote>
   ) => {
     mutation.mutate({
-      content: values.content,
+      id: values.id,
       title: values.title,
+      content: values.content,
+      createdAt: values.createdAt,
+      updatedAt: values.updatedAt,
       tag: values.tag
     });
     actions.resetForm();

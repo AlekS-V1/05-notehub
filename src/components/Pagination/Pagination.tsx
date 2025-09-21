@@ -8,7 +8,7 @@ interface PaginationProps {
 }
 
 export default function Pagination({ pageCount, currentPage, setCurrentPage }: PaginationProps) {
-     const handlePageClick = ({ selected }: { selected: number }) => setCurrentPage(selected + 1);
+    const handlePageClick = ({ selected }: { selected: number }) => setCurrentPage(selected + 1);
     return (
         <ReactPaginate
             pageCount={pageCount ?? 0}
